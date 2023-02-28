@@ -1,7 +1,15 @@
-def calculate_bulb_glow_duration(data_point_1, data_point_2):
-    if data_point_1['data'] == 1 and data_point_2['data'] == 1:
-        return data_point_2['timestamp'] - data_point_1['timestamp']
-    return 0
+def calculate_bulb_glow_duration(data_point_1, data_point_2, timestamps):
+    if (len(timestamps)) > 0 and (timestamps[len(timestamps) - 1]['to'] == data_point_1['timestamp']):
+        timestamps_last_index = len(timestamps) - 1
+        timestamps[timestamps_last_index]['to'] = data_point_2['timestamp']
+        timestamps[timestamps_last_index]['duration'] = data_point_2['timestamp'] - timestamps[timestamps_last_index][
+            'from']
+    else:
+        timestamps.append({'from': data_point_1['timestamp'],
+                           'to': data_point_2['timestamp']})
+
+    return {'duration': data_point_2['timestamp'] - data_point_1['timestamp'],
+            'timestamps': timestamps}
 
 
 def calculate_bulb_analytics(data_stream, sliding_window_size):

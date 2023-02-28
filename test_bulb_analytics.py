@@ -6,6 +6,7 @@ class CalculateBulbTest(TestCase):
     def test_calculate_bulb_analytics(self):
         self.assertEqual(calculate_bulb_analytics(), 'testing')
 
+
 class CalculateBulbGlowDuration(TestCase):
     # test cases for the consecutive data points with no missing data points in between
     def test_calculate_bulb_glow_duration_when_2_datapoints_positive(self):
@@ -25,6 +26,3 @@ class CalculateBulbGlowDuration(TestCase):
         data_point_2 = {'timestamp': 2, 'data': 0}
 
         self.assertEqual(calculate_bulb_glow_duration(data_point_1, data_point_2), 0)
-
-
-

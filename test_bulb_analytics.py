@@ -21,4 +21,44 @@ class CalculateBulbGlowDuration(TestCase):
 
         expected_timestamps = [{'from': 1, 'to': 5}]
         self.assertEqual(calculate_bulb_glow_duration(data_point_1, data_point_2, timestamps),
-                         {'duration': 4, 'timestamps': expected_timestamps })
+                         {'duration': 4, 'timestamps': expected_timestamps})
+
+
+class CalculateBulbAnalytics(TestCase):
+    def test_calculate_bulb_analytics_with_ordered_and_no_missing_data(self):
+        data_list = [{'timestamp': 1, 'data': 1}, {'timestamp': 2, 'data': 1},
+                    {'timestamp': 3, 'data': 1}, {'timestamp': 4, 'data': 0},
+                    {'timestamp': 5, 'data': 1}, {'timestamp': 6, 'data': 1},
+                    {'timestamp': 7, 'data': 1}, {'timestamp': 8, 'data': 0},
+                    {'timestamp': 9, 'data': 0}]
+        window_size = 3
+
+        result = {'total_bulb_on_duration': 4,
+                  'timestamps': [{'from': 1, 'to': 3, 'duration': 2},
+                                 {'from': 5, 'to': 7, 'duration': 2}]}
+
+        self.assertEqual(calculate_bulb_analytics(data_list, window_size), result)
+
+    def test_calculate_bulb_analytics_with_ordered_and_missing_data(self):
+        data_list = [{'timestamp': 1, 'data': 1},{'timestamp': 3, 'data': 1},
+                     {'timestamp': 4, 'data': 0}, {'timestamp': 5, 'data': 1},
+                     {'timestamp': 7, 'data': 1}, {'timestamp': 8, 'data': 0},
+                     {'timestamp': 9, 'data': 0}]
+        window_size = 3
+
+        result = {'total_bulb_on_duration': 4,
+                  'timestamps': [{'from': 1, 'to': 3, 'duration': 2},
+                                 {'from': 5, 'to': 7, 'duration': 2}]}
+
+        self.assertEqual(calculate_bulb_analytics(data_list, window_size), result)
+
+    def test_calculate_bulb_analytics_with_unordered_and_missing_data(self):
+        data_list = [{'timestamp': 3, 'data': 1}, {'timestamp': 1, 'data': 1}]
+        window_size = 3
+
+        result = {'total_bulb_on_duration': 2,
+                  'timestamps': [{'from': 1, 'to': 3, 'duration': 2}]}
+
+        self.assertEqual(calculate_bulb_analytics(data_list, window_size), result)
+
+

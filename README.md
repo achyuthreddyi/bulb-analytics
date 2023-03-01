@@ -21,8 +21,7 @@ and can be unordered.
 
 -  Since the data can be in any order and need not hit the server in the chronological order. We can leverage to the fact that any data point if it is hitting the server would be in the next 100 points from the current timestamp. So we can use this to convert the problem into a sliding window problem, where in 100 lies as the window size to do our operation.
 - In each iteration we pop the element and add a new element in the given sliding window which would be sorted according to the timestamp.
-
-[Demo Image](/images/demo.png)
+<img width="711" alt="demo" src="https://user-images.githubusercontent.com/35003947/222177783-53066ca6-35d4-4d1d-9a49-694a02770ccb.png">
 
 ### Running the test file
 ```commandline

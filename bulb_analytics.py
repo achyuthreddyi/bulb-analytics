@@ -11,7 +11,7 @@ def update_timestamps_list(timestamps, data_point_1, data_point_2):
     return timestamps
 
 
-def calculate_bulb_glow_duration_datapoint(data_point_1, data_point_2, timestamps):
+def calculate_bulb_glow_duration_in_datapoint(data_point_1, data_point_2, timestamps):
     duration = data_point_2['timestamp'] - data_point_1['timestamp']
     timestamps = update_timestamps_list(timestamps, data_point_1, data_point_2) if duration > 0 else timestamps
     return {'total_duration': duration, 'timestamps': timestamps }
@@ -31,14 +31,14 @@ def calculate_bulb_analytics(data_stream, sliding_window_size):
 
         if popped_element['data'] == 1:
             if popped_element['timestamp'] == counter_timestamp and sliding_window[0]['data'] == 1:
-                result = calculate_bulb_glow_duration_datapoint(popped_element, sliding_window[0], timestamps)
+                result = calculate_bulb_glow_duration_in_datapoint(popped_element, sliding_window[0], timestamps)
 
             else:
                 temp = sliding_window[0]
                 data_point_1 = popped_element;
                 data_point_2 = {'timestamp':  temp['timestamp'] if temp['data'] == 1 else temp['timestamp'] - 1,
                                 'data': 1}
-                result = calculate_bulb_glow_duration_datapoint(data_point_1, data_point_2, timestamps)
+                result = calculate_bulb_glow_duration_in_datapoint(data_point_1, data_point_2, timestamps)
                 counter_timestamp = sliding_window[0]['timestamp']
 
             total_bulb_on_duration += result['total_duration']

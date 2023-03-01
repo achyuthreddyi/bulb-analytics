@@ -35,26 +35,27 @@ class UpdateTimestampsList(TestCase):
                          expected_timestamps)
 
 
-# class CalculateBulbGlowDuration(TestCase):
-#     # test cases for the consecutive data points with no missing data points in between
-#     def test_calculate_bulb_glow_duration_when_2_consecutive_datapoints_positive(self):
-#         data_point_1 = {'timestamp': 1, 'data': 1}
-#         data_point_2 = {'timestamp': 2, 'data': 1}
-#         timestamps = []
-#
-#         expected_timestamps = [{'from': 1, 'to': 2}]
-#
-#         self.assertEqual(calculate_bulb_glow_duration(data_point_1, data_point_2, timestamps),
-#                          {'duration': 1, 'timestamps': expected_timestamps})
-#
-#     def test_calculate_bulb_glow_duration_when_2_discrete_datapoints_positive(self):
-#         data_point_1 = {'timestamp': 1, 'data': 1}
-#         data_point_2 = {'timestamp': 5, 'data': 1}
-#         timestamps = []
-#
-#         expected_timestamps = [{'from': 1, 'to': 5}]
-#         self.assertEqual(calculate_bulb_glow_duration(data_point_1, data_point_2, timestamps),
-#                          {'duration': 4, 'timestamps': expected_timestamps})
+class CalculateBulbGlowDuration(TestCase):
+    # test cases for the consecutive data points with no missing data points in between
+    def test_calculate_bulb_glow_duration_when_2_consecutive_datapoints_positive(self):
+        data_point_1 = {'timestamp': 1, 'data': 1}
+        data_point_2 = {'timestamp': 2, 'data': 1}
+        timestamps = []
+
+        expected_output = {'timestamps': [{'duration': 1, 'from': 1, 'to': 2}], 'total_duration': 1}
+
+        self.assertEqual(calculate_bulb_glow_duration_in_datapoint(data_point_1, data_point_2, timestamps),
+                         expected_output)
+
+    def test_calculate_bulb_glow_duration_when_2_discrete_datapoints_positive(self):
+        data_point_1 = {'timestamp': 1, 'data': 1}
+        data_point_2 = {'timestamp': 5, 'data': 1}
+        timestamps = []
+
+        expected_output = {'timestamps': [{'duration': 4, 'from': 1, 'to': 5}], 'total_duration': 4}
+
+        self.assertEqual(calculate_bulb_glow_duration_in_datapoint(data_point_1, data_point_2, timestamps),
+                         expected_output)
 
 
 class CalculateBulbAnalytics(TestCase):

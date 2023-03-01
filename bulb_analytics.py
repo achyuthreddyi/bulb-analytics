@@ -1,4 +1,4 @@
-def update_array(timestamps, data_point_1, data_point_2):
+def update_timestamps_list(timestamps, data_point_1, data_point_2):
     timestamps_length = len(timestamps)
 
     if (timestamps_length > 0) and (timestamps[timestamps_length - 1]['to'] == data_point_1['timestamp']):
@@ -13,7 +13,7 @@ def update_array(timestamps, data_point_1, data_point_2):
 
 def calculate_bulb_glow_duration_datapoint(data_point_1, data_point_2, timestamps):
     duration = data_point_2['timestamp'] - data_point_1['timestamp']
-    timestamps = update_array(timestamps, data_point_1, data_point_2) if duration > 0 else timestamps
+    timestamps = update_timestamps_list(timestamps, data_point_1, data_point_2) if duration > 0 else timestamps
     return {'total_duration': duration, 'timestamps': timestamps }
 
 
@@ -46,6 +46,4 @@ def calculate_bulb_analytics(data_stream, sliding_window_size):
 
         counter_timestamp += 1
 
-        print()
-        print()
     return {'total_bulb_on_duration': total_bulb_on_duration, 'timestamps': timestamps}

@@ -22,7 +22,3 @@ timestamps = result['timestamps']
 
 for i in range(len(timestamps)):
     print(timestamps[i])
-
-
-
-#

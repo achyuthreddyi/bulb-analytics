@@ -17,7 +17,7 @@ Each datapoint contains the timestamp and status of the bulb.
 and can be unordered.
 2. In the problem statement, It is mentioned that data would reach the server within 100 seconds/points. It can be deduced that the any data point can be found in the next 100 points (Unorderliness of data can happen only in the window of 100 data points).
 
-### Approach to solve the problem used.
+### Approach used to solve the problem.
 
 -  Since the data can be in any order and need not hit the server in the chronological order. We can leverage to the fact that any data point if it is hitting the server would be in the next 100 points from the current timestamp. So we can use this to convert the problem into a sliding window problem, where in 100 lies as the window size to do our operation.
 - In each iteration we pop the element and add a new element in the given sliding window which would be sorted according to the timestamp.
